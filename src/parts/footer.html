@@ -2,3 +2,61 @@
 </footer>
 
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script>
+document.addEventListener('alpine:init', () => {
+    Alpine.data('garden', () => ({
+        GRASS: 0,
+        gameSize: 30,
+        playerX: 15,
+        playerY: 15,
+
+        garden: [],
+        moles: [],
+        score: 0,
+
+        init() {
+            for (x=0; x<this.gameSize; x++) {
+                this.garden[x] = []
+                for (y=0; y<this.gameSize; y++) {
+                    this.garden[x][y] = this.GRASS
+                }
+            }
+
+            this.startMoles()
+        },
+
+        pixelClass(y, x) {
+            if (this.playerX == x && this.playerY == y) {
+                return 'bg-black'
+            }
+            return 'bg-green-500'
+        },
+
+        handleKey(event) {
+            console.log(event.key)
+            switch (event.key) {
+                case 'ArrowUp':
+                    if (this.playerY > 0) {
+                        this.playerY--
+                        break
+                    }
+                case 'ArrowDown':
+                    if (this.playerY < this.gameSize - 1) {
+                        this.playerY++
+                    }
+                    break
+                case 'ArrowLeft':
+                    if (this.playerX > 0) {
+                        this.playerX--
+                    }
+                    break
+                case 'ArrowRight':
+                    if (this.playerX < this.gameSize - 1) {
+                        this.playerX++
+                    }
+                    break
+            }
+        }
+    }))
+})
+</script>

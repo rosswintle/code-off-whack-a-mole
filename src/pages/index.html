@@ -1,4 +1,4 @@
-<?php extend('../templates/main.html', ['title' => 'Home Page']) ?>
+<?php extend('../templates/main.html', ['title' => 'Whack that Mole!']) ?>
 
 <?php
 // Page content here
@@ -6,10 +6,19 @@
 // includePart('../parts/some-part.html', ['param' => 'value'])
 ?>
 
-<h1 class="mt-8 text-6xl text-center">Hello, World!</h1>
+<h1 class="mt-8 text-6xl text-center">Whack that Mole!</h1>
 
-<?php if (ENVIRONMENT === 'DEVELOPMENT') : ?>
-    <h2 class="mt-4 text-2xl text-center">Sssh, we're only testing!</h2>
-<?php endif; ?>
+<div x-data="garden" class="flex justify-center mt-10">
+    <div class="flex flex-col" @keydown.window="handleKey">
+        <template x-for="(row, rowIndex) in garden">
+            <div class="flex flex-row">
+                <template x-for="(col, colIndex) in row">
+                    <div class="w-4 h-4 border border-white" :class="pixelClass(rowIndex, colIndex)"></div>
+                </template>
+            </div>
+        </template>
+
+    </div>
+</div>
 
 <?php endExtend(); ?>
